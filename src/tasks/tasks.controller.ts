@@ -1,4 +1,3 @@
-import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
 import {
   Body,
   Controller,
@@ -7,13 +6,13 @@ import {
   Param,
   Patch,
   Post,
-  Query,
+  Query
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
-import { Task as TaskData } from './tasks.entity';
-import { Task, TaskStatus } from './tasks.model';
+import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { Task } from './tasks.model';
 import { TasksService } from './tasks.service';
 @ApiTags('Tasks')
 @Controller('tasks')
@@ -24,7 +23,7 @@ export class TasksController {
   @ApiResponse({
     status: 200,
     description: 'Get All Tasks.',
-    type: TaskData,
+    // type: TaskData,
     isArray: true,
   })
   @Get()
