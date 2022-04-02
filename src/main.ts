@@ -1,10 +1,14 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // Pipe for validation
+  app.useGlobalPipes(new ValidationPipe());
 
+  // Swagger
   const config = new DocumentBuilder()
     .setTitle('NestJs Task Management API')
     .setDescription('The task management API description')
