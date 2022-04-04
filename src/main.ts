@@ -1,12 +1,34 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import e from 'express';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // Pipe for validation
   app.useGlobalPipes(new ValidationPipe());
+
+  // enable CORS
+  const corsAllowList = ['http://localhost:8000', 'http://localhost:3000'];
+
+  app.enableCors((req, callback) => {
+    type CorsType = {
+      origin: boolean;
+      credentials: boolean;
+    };
+
+    const corsOption: CorsType = {
+      origin: false,
+      credentials: true,
+    };
+
+    if (corsAllowList.indexOf(req.header('Origin')) !== -1) {
+      corsOption.origin = true;
+    }
+
+    callback(null, corsOption);
+  });
 
   // Swagger
   const config = new DocumentBuilder()
